@@ -1,0 +1,21 @@
+<h2>Blog Post (<% Post.find params[:id] %>)</h2>
+
+<p>Title: <%= @post.title %></p>
+<p>Body: <%= @post.body %></p>
+
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><%= button_to "Edit Post", edit_post_path, method: :get %></td>
+        <td><%= button_to "Delete Post", post_path(@post), method: :delete,
+                  data: {confirm: "Do you really want to delete it?"} %></td>
+      </tr>
+  </tbody>
+</table>
