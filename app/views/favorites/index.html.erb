@@ -1,0 +1,8 @@
+<div class="container">
+  <h1>Favorite Posts</h1>
+
+  <% @favorites.each do |favorite| %>
+    <h3><%= link_to "#{favorite.post.title}", favorite.post %></h3>
+  <% end %>
+
+</div>

@@ -8,12 +8,13 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :comments, only: [:create, :destroy]
+    resources :favorites, only: [:destroy, :create]
   end
 
   resources :users, except: [:edit, :update] do
+    resources :favorites, only: [:index]
     get :edit, on: :collection
     patch :update, on: :collection
-
   end
 
   resources :sessions, only: [:new, :create] do

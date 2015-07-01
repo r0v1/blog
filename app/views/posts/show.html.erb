@@ -1,54 +1,84 @@
-<h2>Blog Post (<% Post.find params[:id] %>)</h2>
+<div class="container">
+  <h2>Blog Post (<% Post.find params[:id] %>)</h2>
 
-<p>Title: <%= @post.title %></p>
-<p>Body: <%= @post.body %></p>
+  <div>
+    <h3>Title</h3>
+    <p><%= @post.title %></p>
+    <h3>Body</h3>
+    <p><%= @post.body %></p>
+  </div>
 
-<div>
-<%= button_to "Edit Post", edit_post_path, method: :get %>
-</div>
-
-<div>
-<%= button_to "Delete Post", post_path(@post), method: :delete,
-                    data: {confirm: "Do you really want to delete it?"} %>
-</div>
-
-<div>
-  <h2>New Comment</h2>
-
-    <%= form_for [@post, @comment] do |f| %>
-      <div>
-      <%= f.label :body %>
-      <%= f.text_area :body %>
-      <div>
-               <%= f.submit %>
+  <% if current_user.present? %>
+    <% if @post.favorited_by?(current_user) %>
+      <div style="display:inline-block">
+        <%= button_to "Un-Favorite", post_favorite_path(@post, @favorite),
+                                   method: :delete,
+                                   class: "btn btn-default" %>
+      </div>
+    <% else %>
+      <div style="display:inline-block">
+        <%= button_to "Favorite", post_favorites_path(@post),
+                                method: :post,
+                                class: "btn btn-default" %>
+      </div>
     <% end %>
-</div>
 
-<div>
-  <h2>All Comments (<% Comment.count %>)</h2>
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Comment</th>
-          <th>Created On</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @comments.each do |comment| %>
-          <tr>
-            <td><%= comment.body %></td>
-            <td><%= formatted_date(comment.created_at) %></td>
-            <td><%= button_to "Delete", post_comment_path(@post, comment),
-                method: :delete,
-                data: {confirm: "Are you sure you want to delete this post?"} %>
-            </td>
-          </tr>
+
+    <div style="display:inline-block">
+      <%= button_to "Edit Post", edit_post_path, method: :get,
+                                                class: "btn btn-primary" %>
+    </div>
+
+    <div style="display:inline-block">
+      <%= button_to "Delete Post", post_path(@post), method: :delete,
+                                                    class: "btn btn-danger",
+                        data: {confirm: "Do you really want to delete it?"} %>
+    </div>
+  <% end %>
+
+  <div>
+    <h2>New Comment</h2>
+
+      <div>
+        <%= form_for [@post, @comment] do |f| %>
+
+          <h3><%= f.label :body %></h3>
+
+          <div>
+            <%= f.text_area :body, :cols => 65, :rows => 10 %>
+          </div>
+          <%= f.submit class: "btn btn-primary" %>
         <% end %>
-      </tbody>
-    </table>
+      </div>
+  </div>
 
-    <br>
-    <%= link_to "Add a New Post", new_post_path %>
+  <div>
+    <h2>All Comments (<% Comment.count %>)</h2>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Comment</th>
+            <th>Created On</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @comments.each do |comment| %>
+            <tr>
+              <td><%= comment.body %></td>
+              <td><%= formatted_date(comment.created_at) %></td>
+              <td><%= button_to "Delete", post_comment_path(@post, comment),
+                  method: :delete, class: "btn-danger",
+                  data: {confirm: "Are you sure you want to delete this post?"} %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <br>
+      <%= link_to "Add a New Post", new_post_path %>
+  </div>
 </div>
