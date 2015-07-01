@@ -2,15 +2,25 @@ class Post < ActiveRecord::Base
 
   has_many :comments, dependent: :destroy
 
+  has_many :favorites, dependent: :destroy
+  has_many :favoriting_users, through: :favorites, source: :user
+
   belongs_to :user
 
-  validates :title, presence: {message: "Must be provided."},
-                    uniqueness: true
+  def favorited_by?(user)
+    favorites.where(user: user).present?
+  end
 
-  validates :body, uniqueness: {scope: :title}
+  def favorite_for(user)
+    favorites.find_by_user_id(user)
+  end
 
   def self.search(term)
     where(["body ILIKE ? OR title ILIKE ?", "%#{term}%", "%#{term}%"])
   end
 
+  validates :title, presence: {message: "Must be provided."},
+                    uniqueness: true
+
+  validates :body, uniqueness: {scope: :title}
 end

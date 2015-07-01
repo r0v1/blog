@@ -1,18 +1,18 @@
 
-<div>
+<div class="container">
+
   <%= form_for @post do |f| %>
-    <div class="form-group">
-      <%= f.label :title %>
-      <%= f.text_field :title %>
+    <div>
+      <h3><%= f.label :title %></h3>
+      <%= f.text_field :title, :size => 65 %>
     </div>
-    <br>
-    <div class="form-group">
-      <%= f.label :body %>
-      <%= f.text_area :body, :cols => 45, :rows => 20 %>
+
+    <div>
+      <h3><%= f.label :body %></h3>
+      <%= f.text_area :body, :cols => 65, :rows => 10 %>
     </div>
-    <br>
-    <div class="form-group">
-      <%= f.submit "Save" %>
+    <div>
+      <%= f.submit "Save", class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>

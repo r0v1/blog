@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
 
   def self.search(term)
-    where(["body ILIKE ?", "%#{term}%"])
+    Comment.where(["body ILIKE ?", "%#{term}%"]).order("created_at desc")
   end
 
 

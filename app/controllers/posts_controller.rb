@@ -4,8 +4,8 @@ before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @current_time = Time.now
-    @posts = Post.all
-    @posts = Post.page(params[:page]).per(10)
+    @posts = Post.all.order('created_at DESC')
+    @posts_pagination = Post.page(params[:page]).per(10)
   end
 
   def new
@@ -26,6 +26,7 @@ before_action :authenticate_user!, except: [:index, :show]
     @post = Post.find(params[:id])
     @comment = Comment.new
     @comments = @post.comments.order('created_at DESC')
+    @favorite = @post.favorite_for(current_user)
   end
 
   def edit
