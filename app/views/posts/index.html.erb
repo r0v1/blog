@@ -32,9 +32,11 @@
       </tbody>
     </table>
 
-    <br>
-    <%= link_to "Add a New Post", new_post_path %>
+  <div>
+  <%= link_to "Add a New Post", new_post_path %>
+  </div>
 
-    <%# paginate @posts, q: params[:q] %>
-
+  <div>
+  <%= paginate @posts, theme: 'twitter-bootstrap-3' %>
+  </div>
 </div>

@@ -4,21 +4,12 @@
 <p>Body: <%= @post.body %></p>
 
 <div>
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><%= button_to "Edit Post", edit_post_path, method: :get %></td>
-          <td><%= button_to "Delete Post", post_path(@post), method: :delete,
-                    data: {confirm: "Do you really want to delete it?"} %></td>
-        </tr>
-    </tbody>
-  </table>
+<%= button_to "Edit Post", edit_post_path, method: :get %>
+</div>
+
+<div>
+<%= button_to "Delete Post", post_path(@post), method: :delete,
+                    data: {confirm: "Do you really want to delete it?"} %>
 </div>
 
 <div>
@@ -39,13 +30,13 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Body</th>
+          <th>Comment</th>
           <th>Created On</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <% @post.comments.each do |comment| %>
+        <% @comments.each do |comment| %>
           <tr>
             <td><%= comment.body %></td>
             <td><%= formatted_date(comment.created_at) %></td>
