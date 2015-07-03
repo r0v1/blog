@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
 
+  mount_uploader :asset, AssetUploader
+
   has_many :comments, dependent: :destroy
 
   has_many :favorites, dependent: :destroy

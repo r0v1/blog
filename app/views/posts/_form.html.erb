@@ -8,6 +8,11 @@
     </div>
 
     <div>
+      <%= f.label :asset %>
+      <%= f.file_field :asset %>
+    </div>
+
+    <div>
       <h3><%= f.label :body %></h3>
       <%= f.text_area :body, :cols => 65, :rows => 10 %>
     </div>
