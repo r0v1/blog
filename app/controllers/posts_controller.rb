@@ -3,7 +3,6 @@ class PostsController < ApplicationController
 before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @current_time = Time.now
     @posts = Post.all.order('created_at DESC')
     @posts_pagination = Post.page(params[:page]).per(10)
   end
@@ -13,8 +12,8 @@ before_action :authenticate_user!, except: [:index, :show]
   end
 
   def create
-    post_params = params.require(:post).permit([:title, :body])
     @post          = Post.new(post_params)
+    @post_user = current_user
     if @post.save
       redirect_to post_path(@post.id), notice: "Post Created"
     else
@@ -27,6 +26,8 @@ before_action :authenticate_user!, except: [:index, :show]
     @comment = Comment.new
     @comments = @post.comments.order('created_at DESC')
     @favorite = @post.favorite_for(current_user)
+    @tags  = @post.tags(params[:tag_ids])
+
   end
 
   def edit
@@ -55,10 +56,7 @@ before_action :authenticate_user!, except: [:index, :show]
   end
 
   def post_params
-    # This uses Strong Paramters feature of Rails where you must explicit by
-    # default about what parameters you'd like to allow for your record
-    # in this case we only want the user to enter teh title and the body
-    params.require(:post).permit([:title, :body])
+    params.require(:post).permit(:title, :body, {tag_ids: []})
   end
 
 

@@ -5,6 +5,9 @@ class Post < ActiveRecord::Base
   has_many :favorites, dependent: :destroy
   has_many :favoriting_users, through: :favorites, source: :user
 
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+
   belongs_to :user
 
   def favorited_by?(user)
