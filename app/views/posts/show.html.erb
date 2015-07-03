@@ -1,13 +1,11 @@
 <div class="container">
-  <h2>Blog Post (<% Post.find params[:id] %>)</h2>
+  <h2>Blog Post</h2>
 
   <div>
     <h3>Title</h3>
     <p><%= @post.title %></p>
     <h3>Body</h3>
     <p><%= @post.body %></p>
-    <h3>Tags</h3>
-    <p><%= @tag %></p>
   </div>
 
   <% if current_user.present? %>
@@ -56,9 +54,13 @@
   </div>
 
   <div>
-    <h2>All Comments (<% Comment.count %>)</h2>
+    <h2>All Comments</h2>
 
       <table class="table table-bordered">
+        <col style="width:70%">
+        <col style="width:20%">
+        <col style="width:10%">
+
         <thead>
           <tr>
             <th>Comment</th>
